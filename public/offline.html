@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Civic Issues Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .features {
+            text-align: left;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .features h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .features ul {
+            list-style: none;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .features li::before {
+            content: "✓";
+            margin-right: 0.5rem;
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .status {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .status.online {
+            background: rgba(74, 222, 128, 0.2);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .status.offline {
+            background: rgba(248, 113, 113, 0.2);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">📱</div>
+
+        <h1>You're Offline</h1>
+
+        <p>Don't worry! This app works offline too. You can still view cached issues, add new reports, and manage your
+            data. Everything will sync when you're back online.</p>
+
+        <div class="features">
+            <h3>Available Offline Features:</h3>
+            <ul>
+                <li>View previously loaded issues and reports</li>
+                <li>Create new issue reports (will sync when online)</li>
+                <li>Add comments to existing issues</li>
+                <li>Browse the interactive map</li>
+                <li>Access your profile and settings</li>
+                <li>View cached analytics and reports</li>
+            </ul>
+        </div>
+
+        <a href="/" class="button">Go to Dashboard</a>
+
+        <div class="status offline" id="status">
+            <strong>Status:</strong> Offline - Limited functionality available
+        </div>
+    </div>
+
+    <script>
+        // Check online status and update UI
+        function updateStatus() {
+            const statusEl = document.getElementById('status');
+
+            if (navigator.onLine) {
+                statusEl.className = 'status online';
+                statusEl.innerHTML = '<strong>Status:</strong> Online - Full functionality restored';
+
+                // Auto-redirect to dashboard after 2 seconds when back online
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                statusEl.className = 'status offline';
+                statusEl.innerHTML = '<strong>Status:</strong> Offline - Limited functionality available';
+            }
+        }
+
+        // Listen for online/offline events
+        window.addEventListener('online', updateStatus);
+        window.addEventListener('offline', updateStatus);
+
+        // Initial status check
+        updateStatus();
+
+        // Periodic status check
+        setInterval(updateStatus, 5000);
+
+        // Register service worker if not already registered
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registered:', registration);
+                })
+                .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

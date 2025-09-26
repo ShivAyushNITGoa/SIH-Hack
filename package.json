@@ -1,0 +1,44 @@
+{
+  "name": "civic-admin-dashboard",
+  "version": "1.0.0",
+  "description": "Admin Dashboard for Managing Civic Issues",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:turbo": "next build --turbo",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.294.0",
+    "next": "^14.0.0",
+    "ol": "^9.2.4",
+    "pg": "^8.11.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hot-toast": "^2.6.0",
+    "react-leaflet": "^4.2.1",
+    "recharts": "^2.15.4",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.55.7",
+    "@types/leaflet": "^1.9.20",
+    "@types/node": "^20.0.0",
+    "@types/pg": "^8.10.7",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.0.0"
+  }
+}
